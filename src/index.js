@@ -51,7 +51,7 @@ export default (metafile, transform) => {
       });
       grantMap.set(id, grantSetPerFile);
     },
-    async banner() {
+    async renderChunk(code, chunk, outputOptions) {
       let meta = await fs.readFile(metafile, 'utf8');
       const lines = meta.split('\n').map(line => line.trim());
       const start = lines.indexOf(META_START);
@@ -97,7 +97,7 @@ export default (metafile, transform) => {
         '',
       ].join('\n');
       if (transform) meta = transform(meta);
-      return meta;
+      return `${meta}\n${code}`
     },
   };
 };
